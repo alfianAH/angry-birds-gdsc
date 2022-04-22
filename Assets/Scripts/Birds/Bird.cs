@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Birds
 {
@@ -9,6 +10,8 @@ namespace Birds
         public  enum BirdState{ Idle, Thrown }
         private Rigidbody2D birdRigidbody;
         private CircleCollider2D birdCollider;
+
+        
 
         private BirdState birdState;
         private float minVelocity = 0.05f;
@@ -41,6 +44,11 @@ namespace Birds
                 flagDestroy = true;
                 StartCoroutine(DestroyAfter(2));
             }
+        }
+
+        private void OnDestroy()
+        {
+            
         }
 
         private IEnumerator DestroyAfter(float seconds)

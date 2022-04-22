@@ -11,7 +11,14 @@ namespace Gameplay
 
         private void Start()
         {
+            
+
             slingShooter.InitiateBird(birds[0]);
+        }
+        
+        private void ChangeBird()
+        {   
+            
         }
     }
 }
