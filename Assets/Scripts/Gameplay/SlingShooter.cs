@@ -19,12 +19,24 @@ namespace Gameplay{
 
         private void OnMouseUp()
         {
+            collider.enabled = false;
+            var position = transform.position;
+            Vector2 velocity = startPos - (Vector2) position;
+            float distance = Vector2.Distance(startPos, position);
             
+            // Set sling shooter to start position
+            gameObject.transform.position = startPos;
         }
 
         private void OnMouseDrag()
         {
-            
+            // Change mouse position to world position
+            Vector2 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // Calculate it so that the 'rubber' of the catapult is within the specified radius
+            Vector2 dir = p - startPos;
+            if (dir.sqrMagnitude > radius)
+                dir = dir.normalized * radius;
+            transform.position = startPos + dir;
         }
     }
 }
