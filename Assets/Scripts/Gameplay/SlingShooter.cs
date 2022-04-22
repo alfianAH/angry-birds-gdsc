@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using Birds;
 using UnityEngine;
 
 namespace Gameplay{
     public class SlingShooter : MonoBehaviour
     {
-        public CircleCollider2D collider;
+        public CircleCollider2D shootAreaCollider;
         private Vector2 startPos;
 
         [SerializeField] private float radius = 0.75f;
-
         [SerializeField] private float throwSpeed = 30f;
+
+        private Bird bird;
         
         private void Start()
         {
@@ -19,10 +19,12 @@ namespace Gameplay{
 
         private void OnMouseUp()
         {
-            collider.enabled = false;
+            shootAreaCollider.enabled = false;
             var position = transform.position;
             Vector2 velocity = startPos - (Vector2) position;
             float distance = Vector2.Distance(startPos, position);
+
+
             
             // Set sling shooter to start position
             gameObject.transform.position = startPos;
@@ -37,6 +39,11 @@ namespace Gameplay{
             if (dir.sqrMagnitude > radius)
                 dir = dir.normalized * radius;
             transform.position = startPos + dir;
+        }
+
+        public void InitiateBird(Bird bird)
+        {
+            
         }
     }
 }
