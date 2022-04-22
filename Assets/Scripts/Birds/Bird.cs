@@ -11,12 +11,13 @@ namespace Birds
         private CircleCollider2D birdCollider;
 
         public UnityAction onBirdDestroyed = delegate {  };
-        
+        public UnityAction<Bird> onBirdShot = delegate {  };
 
         private BirdState birdState;
         private float minVelocity = 0.05f;
         private bool flagDestroy = false;
 
+        public BirdState State => birdState;
 
         private void Start()
         {
@@ -36,7 +37,8 @@ namespace Birds
                 birdState = BirdState.Thrown;
             }
 
-            if (birdState == BirdState.Thrown &&
+            if ((birdState == BirdState.Thrown ||
+                birdState == BirdState.HitSomething) &&
                 birdRigidbody.velocity.sqrMagnitude < minVelocity &&
                 !flagDestroy)
             {
@@ -49,7 +51,7 @@ namespace Birds
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-
+            birdState = BirdState.HitSomething;
         }
 
         private void OnDestroy()
@@ -85,7 +87,7 @@ namespace Birds
             birdCollider.enabled = true;
             birdRigidbody.bodyType = RigidbodyType2D.Dynamic;
             birdRigidbody.velocity = distance * speed * velocity;
-
+            onBirdShot(this);
         }
     }
 }

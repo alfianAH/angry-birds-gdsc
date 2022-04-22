@@ -18,11 +18,12 @@ namespace Gameplay
 
         private void Start()
         {
+            trailController = TrailController.Instance;
 
             foreach (var bird in birds)
             {
                 bird.onBirdDestroyed += ChangeBird;
-                
+                bird.onBirdShot += AssignTrail;
             }
 
             foreach (var enemy in enemies)
@@ -35,7 +36,8 @@ namespace Gameplay
 
         private void AssignTrail(Bird bird)
         {
-            
+            trailController.SetBird(bird);
+            StartCoroutine(trailController.SpawnTrail());
         }
 
         private void ChangeBird()
