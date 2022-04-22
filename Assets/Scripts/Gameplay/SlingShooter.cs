@@ -8,6 +8,7 @@ namespace Gameplay{
         private Vector2 startPos;
 
         [SerializeField] private float radius = 0.75f;
+
         [SerializeField] private float throwSpeed = 30f;
 
         private Bird bird;
@@ -24,7 +25,7 @@ namespace Gameplay{
             Vector2 velocity = startPos - (Vector2) position;
             float distance = Vector2.Distance(startPos, position);
 
-
+            bird.Shoot(velocity, distance, throwSpeed);
             
             // Set sling shooter to start position
             gameObject.transform.position = startPos;
@@ -43,7 +44,9 @@ namespace Gameplay{
 
         public void InitiateBird(Bird bird)
         {
-            
+            this.bird = bird;
+            this.bird.MoveTo(gameObject.transform.position, gameObject);
+            shootAreaCollider.enabled = true;
         }
     }
 }
