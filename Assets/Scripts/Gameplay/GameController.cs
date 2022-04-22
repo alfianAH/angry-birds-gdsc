@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Birds;
 using Enemies;
@@ -33,32 +34,44 @@ namespace Gameplay
                 enemy.onEnemyDestroyed += CheckGameEnd;
             }
 
+            tapCollider.enabled = false;
             slingShooter.InitiateBird(birds[0]);
-            
+            shotBird = birds[0];
         }
 
         private void OnMouseUp()
         {
-            
+            if (shotBird != null)
+            {
+                shotBird.OnTap();
+            }
         }
 
         private void AssignTrail(Bird bird)
         {
             trailController.SetBird(bird);
             StartCoroutine(trailController.SpawnTrail());
-            
+            tapCollider.enabled = true;
         }
 
         private void ChangeBird()
         {
+            tapCollider.enabled = false;
 
             if (isGameEnded) return;
             birds.RemoveAt(0);
             
-
-            if (birds.Count > 0)
+            try
             {
-                slingShooter.InitiateBird(birds[0]);
+                shotBird = birds[0];
+                if (birds.Count > 0)
+                {
+                    slingShooter.InitiateBird(birds[0]);
+                }
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                // gameManager.GameFailed();
             }
         }
 
