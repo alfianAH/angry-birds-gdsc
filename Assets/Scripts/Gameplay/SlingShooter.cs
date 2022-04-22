@@ -30,7 +30,7 @@ namespace Gameplay{
             
             // Set sling shooter to start position
             gameObject.transform.position = startPos;
-            
+            trajectory.enabled = false;
         }
 
         private void OnMouseDrag()
@@ -43,7 +43,10 @@ namespace Gameplay{
                 dir = dir.normalized * radius;
             transform.position = startPos + dir;
 
-            
+            float distance = Vector2.Distance(startPos, transform.position);
+
+            if (!trajectory.enabled) trajectory.enabled = true;
+            DisplayTrajectory(distance);
         }
 
         public void InitiateBird(Bird bird)
