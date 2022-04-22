@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,15 +6,17 @@ namespace Birds
 {
     public class Bird : MonoBehaviour
     {
-        public  enum BirdState{ Idle, Thrown }
+        public  enum BirdState{ Idle, Thrown, HitSomething }
         private Rigidbody2D birdRigidbody;
         private CircleCollider2D birdCollider;
 
         public UnityAction onBirdDestroyed = delegate {  };
+        
 
         private BirdState birdState;
         private float minVelocity = 0.05f;
         private bool flagDestroy = false;
+
 
         private void Start()
         {
@@ -44,6 +45,11 @@ namespace Birds
                 flagDestroy = true;
                 StartCoroutine(DestroyAfter(2));
             }
+        }
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+
         }
 
         private void OnDestroy()
@@ -78,7 +84,8 @@ namespace Birds
         {
             birdCollider.enabled = true;
             birdRigidbody.bodyType = RigidbodyType2D.Dynamic;
-            birdRigidbody.velocity = velocity * speed * distance;
+            birdRigidbody.velocity = distance * speed * velocity;
+
         }
     }
 }

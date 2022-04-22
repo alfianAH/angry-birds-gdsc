@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Birds;
 using Enemies;
+using Trail;
 using UnityEngine;
 
 namespace Gameplay
@@ -11,13 +12,17 @@ namespace Gameplay
         public List<Bird> birds;
         public List<Enemy> enemies;
 
+        private TrailController trailController;
+
         private bool isGameEnded;
 
         private void Start()
         {
+
             foreach (var bird in birds)
             {
                 bird.onBirdDestroyed += ChangeBird;
+                
             }
 
             foreach (var enemy in enemies)
@@ -26,6 +31,11 @@ namespace Gameplay
             }
 
             slingShooter.InitiateBird(birds[0]);
+        }
+
+        private void AssignTrail(Bird bird)
+        {
+            
         }
 
         private void ChangeBird()
