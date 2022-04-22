@@ -18,6 +18,7 @@ namespace Birds
         private bool flagDestroy = false;
 
         public BirdState State => birdState;
+        protected Rigidbody2D BirdRigidbody => birdRigidbody;
 
         private void Start()
         {
@@ -52,6 +53,11 @@ namespace Birds
         private void OnCollisionEnter2D(Collision2D other)
         {
             birdState = BirdState.HitSomething;
+        }
+
+        public virtual void OnTap()
+        {
+            // Do nothing
         }
 
         private void OnDestroy()

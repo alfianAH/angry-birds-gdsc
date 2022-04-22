@@ -11,7 +11,9 @@ namespace Gameplay
         public SlingShooter slingShooter;
         public List<Bird> birds;
         public List<Enemy> enemies;
+        public BoxCollider2D tapCollider;
 
+        private Bird shotBird;
         private TrailController trailController;
 
         private bool isGameEnded;
@@ -32,18 +34,28 @@ namespace Gameplay
             }
 
             slingShooter.InitiateBird(birds[0]);
+            
+        }
+
+        private void OnMouseUp()
+        {
+            
         }
 
         private void AssignTrail(Bird bird)
         {
             trailController.SetBird(bird);
             StartCoroutine(trailController.SpawnTrail());
+            
         }
 
         private void ChangeBird()
         {
+
             if (isGameEnded) return;
             birds.RemoveAt(0);
+            
+
             if (birds.Count > 0)
             {
                 slingShooter.InitiateBird(birds[0]);
