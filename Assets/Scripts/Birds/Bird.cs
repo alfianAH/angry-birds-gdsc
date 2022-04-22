@@ -11,7 +11,7 @@ namespace Birds
         private Rigidbody2D birdRigidbody;
         private CircleCollider2D birdCollider;
 
-        
+        public UnityAction onBirdDestroyed = delegate {  };
 
         private BirdState birdState;
         private float minVelocity = 0.05f;
@@ -48,7 +48,7 @@ namespace Birds
 
         private void OnDestroy()
         {
-            
+            onBirdDestroyed();
         }
 
         private IEnumerator DestroyAfter(float seconds)
