@@ -45,7 +45,8 @@ namespace Birds
 
         private IEnumerator DestroyAfter(float seconds)
         {
-            
+            yield return new WaitForSeconds(seconds);
+            Destroy(gameObject);
         }
         
         /// <summary>
@@ -55,7 +56,8 @@ namespace Birds
         /// <param name="parent"></param>
         public void MoveTo(Vector2 target, GameObject parent)
         {
-            
+            gameObject.transform.SetParent(parent.transform);
+            gameObject.transform.position = target;
         }
         
         /// <summary>
@@ -66,7 +68,9 @@ namespace Birds
         /// <param name="speed"></param>
         public void Shoot(Vector2 velocity, float distance, float speed)
         {
-            
+            birdCollider.enabled = true;
+            birdRigidbody.bodyType = RigidbodyType2D.Dynamic;
+            birdRigidbody.velocity = velocity * speed * distance;
         }
     }
 }
